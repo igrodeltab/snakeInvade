@@ -2,12 +2,9 @@
 
 public class ToggleObject : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject objectToToggle; // Объект, который мы хотим переключать
+    [SerializeField] private GameObject objectToToggle; // Объект, который мы хотим переключать
     [SerializeField] private GameInitializer _gameInitializer;
-
-    [SerializeField]
-    private float toggleInterval; // Интервал в секундах
+    [SerializeField] private float toggleInterval; // Интервал в секундах
 
     private float timer; // Счетчик времени
 
@@ -29,6 +26,9 @@ public class ToggleObject : MonoBehaviour
                 objectToToggle.SetActive(!objectToToggle.activeSelf); // Переключаем активность объекта
                 timer = 0.0f; // Сбрасываем счетчик времени
             }
+        } else if (_gameInitializer._gameInitialized == true)
+        {
+            objectToToggle.SetActive(false);
         }
     }
 }

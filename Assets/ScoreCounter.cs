@@ -3,9 +3,9 @@ using TMPro;
 
 public class ScoreCounter : MonoBehaviour
 {
-    private int _currentScore; // Текущий счет
-
     [SerializeField] private TextMeshProUGUI _scoreText; // Ссылка на TextMeshProUGUI компонент
+
+    private int _currentScore; // Текущий счет
 
     private void Awake()
     {

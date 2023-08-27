@@ -10,12 +10,15 @@ public class SnakeController : MonoBehaviour
     [SerializeField] private FoodSpawner _foodSpawner;
     [SerializeField] private ScoreCounter _scoreCounter;
     [SerializeField] private int _addPointsPerFood;
+    [SerializeField] private GameOverHandler _gameOverHandler;
+    [SerializeField] private float _delayTailColliderDisable;
 
     private List<Transform> _tail = new List<Transform>();
     private Vector2 _currentDirection = Vector2.up;
     private Vector2 _lastPosition;
     private float _tickCounter; // Счетчик времени для нашего "тика"
     private bool _shouldGrow = false;
+    private bool _collisionsEnabled = false;
 
     private void Start()
     {
@@ -25,6 +28,19 @@ public class SnakeController : MonoBehaviour
         {
             GrowTail();
         }
+
+        // Отключаем коллайдеры на начальный момент
+        foreach (Transform tailSegment in _tail)
+        {
+            Collider2D tailCollider = tailSegment.GetComponent<Collider2D>();
+            if (tailCollider)
+            {
+                tailCollider.enabled = false;
+            }
+        }
+
+        // Включим коллайдеры через 2 секунды
+        Invoke("EnableColliders", _delayTailColliderDisable);
     }
 
     private void Update()
@@ -116,6 +132,8 @@ public class SnakeController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!_collisionsEnabled) return;
+
         Food food = collision.GetComponent<Food>();
         if (food != null)
         {
@@ -128,7 +146,22 @@ public class SnakeController : MonoBehaviour
         Tail tail = collision.GetComponent<Tail>();
         if (tail != null)
         {
-            //Debug.Log("OnTriggerEnter2D: tail");
+            _gameOverHandler.OnGameOver();
+            Debug.Log("OnTriggerEnter2D: tail");
         }
+    }
+
+    private void EnableColliders()
+    {
+        foreach (Transform tailSegment in _tail)
+        {
+            Collider2D tailCollider = tailSegment.GetComponent<Collider2D>();
+            if (tailCollider)
+            {
+                tailCollider.enabled = true;
+            }
+        }
+
+        _collisionsEnabled = true;
     }
 }

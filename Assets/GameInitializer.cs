@@ -22,7 +22,7 @@ public class GameInitializer : MonoBehaviour
         }
     }
 
-    private void InitializeGame(bool isActive)
+    public void InitializeGame(bool isActive)
     {
         // Активируем каждый объект из списка
         foreach (GameObject obj in _objectsToActivate)
