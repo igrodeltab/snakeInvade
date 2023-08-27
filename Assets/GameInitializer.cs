@@ -5,6 +5,7 @@ public class GameInitializer : MonoBehaviour
 {
     // Список объектов, которые следует активировать при начале игры
     [SerializeField] private GameObject[] _objectsToActivate;
+    [SerializeField] private GameObject _objectToDeactivate;
 
     // Переменная, которая показывает, инициализировалась ли игра или нет
     public bool _gameInitialized = false;
@@ -20,6 +21,7 @@ public class GameInitializer : MonoBehaviour
         if (!_gameInitialized && Input.anyKeyDown)
         {
             InitializeGame(true);
+            _objectToDeactivate.SetActive(false);
         }
 
         if(Input.GetKeyDown(KeyCode.R))

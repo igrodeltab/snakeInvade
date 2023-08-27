@@ -4,6 +4,7 @@ using TMPro;
 public class ScoreCounter : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _scoreText; // Ссылка на TextMeshProUGUI компонент
+    [SerializeField] private RecordHandler _recordHandler;
 
     private int _currentScore; // Текущий счет
 
@@ -22,6 +23,8 @@ public class ScoreCounter : MonoBehaviour
     {
         _currentScore += points;
         UpdateScoreText();
+
+        _recordHandler.CheckAndSetHighScore(_currentScore);
     }
 
     // Метод для обновления текста счета в TextMeshProUGUI
