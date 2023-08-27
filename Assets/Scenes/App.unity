@@ -147,9 +147,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 237015603}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.4, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.08, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.3, z: 0}
+  m_LocalScale: {x: 0.8, y: 0.16, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1569239886}
@@ -451,7 +451,7 @@ Transform:
   m_GameObject: {fileID: 1569239884}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 237015604}
@@ -472,8 +472,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 0.5
   _tailPrefab: {fileID: 6793977672552510802, guid: c04b90860416b0142b9bcc6613c0dcbc, type: 3}
-  _initialTailSize: 0
-  _tickDuration: 0.5
+  _initialTailSize: 1
+  _tickDuration: 0.125
   _foodSpawner: {fileID: 1339372334}
 --- !u!61 &1569239888
 BoxCollider2D:

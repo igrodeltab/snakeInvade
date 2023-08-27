@@ -12,10 +12,13 @@ public class SnakeController : MonoBehaviour
     private List<Transform> _tail = new List<Transform>();
     private Vector2 _currentDirection = Vector2.up;
     private Vector2 _lastPosition;
-    private float _tickCounter = 0f; // Счетчик времени для нашего "тика"
+    private float _tickCounter; // Счетчик времени для нашего "тика"
+    private bool _shouldGrow = false;
 
     private void Start()
     {
+        _tickCounter = 0f;
+
         for (int i = 0; i < _initialTailSize; i++)
         {
             GrowTail();
@@ -73,11 +76,19 @@ public class SnakeController : MonoBehaviour
         if (_tail.Count == 0)
             return;
 
-        _tail[0].position = _lastPosition;
-        for (int i = 1; i < _tail.Count; i++)
+        Vector2 lastTailSegmentPosition = _tail[_tail.Count - 1].position; // Сохраняем позицию последнего сегмента хвоста
+
+        for (int i = _tail.Count - 1; i > 0; i--) // Начнем со сдвига с конца хвоста
         {
-            Vector2 prevPosition = _tail[i - 1].position;
-            _tail[i].position = prevPosition;
+            _tail[i].position = _tail[i - 1].position;
+        }
+
+        _tail[0].position = _lastPosition;
+
+        if (_shouldGrow)
+        {
+            GrowTail(lastTailSegmentPosition); // Передаем позицию последнего сегмента
+            _shouldGrow = false;
         }
     }
 
@@ -94,21 +105,27 @@ public class SnakeController : MonoBehaviour
         _tail.Add(tailObject.transform);
     }
 
+
+    public void GrowTail(Vector2 lastTailSegmentPosition)
+    {
+        GameObject tailObject = Instantiate(_tailPrefab, lastTailSegmentPosition, Quaternion.identity);
+        _tail.Add(tailObject.transform);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("OnTriggerEnter2D");
         Food food = collision.GetComponent<Food>();
         if (food != null)
         {
-            GrowTail();
+            _shouldGrow = true;
             Destroy(collision.gameObject); // Удаляем еду после "поедания".
             _foodSpawner.SpawnFood();
         }
-        /*
-        else if (collision.GetComponent<Transform>() != null && _tail.Contains(collision.GetComponent<Transform>()))
+
+        Tail tail = collision.GetComponent<Tail>();
+        if (tail != null)
         {
-            Debug.Log("Game Over!");
-            Time.timeScale = 0;
-        } */
+            Debug.Log("OnTriggerEnter2D: tail");
+        }
     }
 }
