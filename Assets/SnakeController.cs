@@ -186,4 +186,17 @@ public class SnakeController : MonoBehaviour
     {
         return _moveSpeed;
     }
+
+    public bool IsPositionOnTail(Vector2 position)
+    {
+        foreach (Transform tailSegment in _tail)
+        {
+            if (Vector2.Distance(tailSegment.position, position) < _moveSpeed)
+            {
+                return true; // Позиция совпадает с частью хвоста
+            }
+        }
+
+        return false;
+    }
 }

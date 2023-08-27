@@ -26,12 +26,34 @@ public class FoodSpawner : MonoBehaviour
 
     public void SpawnFood()
     {
-        // Генерация случайных координат в пределах границ экрана
-        int randomX = Mathf.FloorToInt(Random.Range(_minBounds.x, _maxBounds.x) / _cellSize);
-        int randomY = Mathf.FloorToInt(Random.Range(_minBounds.y, _maxBounds.y) / _cellSize);
+        Vector2 spawnPosition = GetSpawnPosition();
 
-        Vector2 spawnPosition = new Vector2(randomX * _cellSize, randomY * _cellSize);
+        if (spawnPosition != Vector2.zero) // Если получена корректная позиция
+        {
+            Instantiate(_foodPrefab, spawnPosition, Quaternion.identity);
+        }
+    }
 
-        Instantiate(_foodPrefab, spawnPosition, Quaternion.identity);
+    private Vector2 GetSpawnPosition()
+    {
+        int maxAttempts = 1000; // Максимальное количество попыток
+        int currentAttempt = 0;
+
+        while (currentAttempt < maxAttempts)
+        {
+            int randomX = Mathf.FloorToInt(Random.Range(_minBounds.x, _maxBounds.x) / _cellSize);
+            int randomY = Mathf.FloorToInt(Random.Range(_minBounds.y, _maxBounds.y) / _cellSize);
+
+            Vector2 potentialPosition = new Vector2(randomX * _cellSize, randomY * _cellSize);
+
+            if (!_snakeController.IsPositionOnTail(potentialPosition))
+            {
+                return potentialPosition; // Позиция подходит для спавна
+            }
+
+            currentAttempt++;
+        }
+
+        return Vector2.zero; // Не удалось найти подходящую позицию после всех попыток
     }
 }
