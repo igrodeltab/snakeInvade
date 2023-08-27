@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameInitializer : MonoBehaviour
 {
@@ -19,6 +20,11 @@ public class GameInitializer : MonoBehaviour
         if (!_gameInitialized && Input.anyKeyDown)
         {
             InitializeGame(true);
+        }
+
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 

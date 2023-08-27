@@ -23,10 +23,14 @@ public class ToggleObject : MonoBehaviour
             // Проверяем, прошло ли достаточно времени
             if (timer >= toggleInterval)
             {
+                Debug.Log("timer: " + timer);
+                Debug.Log("timer >= toggleInterval");
                 objectToToggle.SetActive(!objectToToggle.activeSelf); // Переключаем активность объекта
                 timer = 0.0f; // Сбрасываем счетчик времени
             }
-        } else if (_gameInitializer._gameInitialized == true)
+        }
+        
+        if (_gameInitializer._gameInitialized == true)
         {
             objectToToggle.SetActive(false);
         }

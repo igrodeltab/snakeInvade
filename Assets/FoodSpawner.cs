@@ -2,34 +2,36 @@
 
 public class FoodSpawner : MonoBehaviour
 {
-    // Префаб еды, который будет спавниться на сцене
     [SerializeField] private GameObject _foodPrefab;
+    [SerializeField] private float _borderOffset; // Отступ от границы экрана
+    [SerializeField] private SnakeController _snakeController;
 
-    // Координаты минимальной и максимальной границ экрана
     private Vector2 _minBounds;
     private Vector2 _maxBounds;
+    private float _cellSize; // Размер клетки сетки
 
     private void Start()
     {
-        // Преобразование координат экрана в координаты мирового пространства
-        // для определения границ спавна еды
+        _cellSize = _snakeController.GetMoveSpeed();
+
         _minBounds = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0));
         _maxBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
 
-        // Спавн первой еды
+        // Учтем отступ от границы экрана
+        _minBounds += new Vector2(_borderOffset, _borderOffset);
+        _maxBounds -= new Vector2(_borderOffset, _borderOffset);
+
         SpawnFood();
     }
 
-    // Функция для спавна еды на случайных координатах в пределах экрана
     public void SpawnFood()
     {
         // Генерация случайных координат в пределах границ экрана
-        float randomX = Random.Range(_minBounds.x, _maxBounds.x);
-        float randomY = Random.Range(_minBounds.y, _maxBounds.y);
+        int randomX = Mathf.FloorToInt(Random.Range(_minBounds.x, _maxBounds.x) / _cellSize);
+        int randomY = Mathf.FloorToInt(Random.Range(_minBounds.y, _maxBounds.y) / _cellSize);
 
-        Vector2 spawnPosition = new Vector2(randomX, randomY);
+        Vector2 spawnPosition = new Vector2(randomX * _cellSize, randomY * _cellSize);
 
-        // Инстанцирование префаба еды на сгенерированных координатах
         Instantiate(_foodPrefab, spawnPosition, Quaternion.identity);
     }
 }

@@ -7,6 +7,7 @@ public class GameOverHandler : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _resultScoreText; // Ссылка на TextMeshProUGUI компонент
     [SerializeField] private ScoreCounter _scoreCounter;
     [SerializeField] private GameInitializer _gameInitializer;
+    [SerializeField] private TextMeshProUGUI _pressAnyKeyText;
 
     private void Awake()
     {
@@ -17,7 +18,7 @@ public class GameOverHandler : MonoBehaviour
     public void OnGameOver()
     {
         // Остановить игру (пауза)
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
 
         // Активировать панель поражения
         if (_gameOverPanel)
@@ -26,12 +27,9 @@ public class GameOverHandler : MonoBehaviour
             _gameOverPanel.SetActive(true);
         }
 
-        _gameInitializer.InitializeGame(false);
-    }
+        _pressAnyKeyText.text = "Press R to restart";
 
-    // Метод для перезапуска уровня
-    public void RestartGame()
-    {
-        Time.timeScale = 1; // Возобновить игру
+        _gameInitializer.InitializeGame(false);
+        _scoreCounter.gameObject.SetActive(false);
     }
 }

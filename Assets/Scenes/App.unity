@@ -411,7 +411,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 640, y: 50}
+  m_SizeDelta: {x: 750, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &355696820
 MonoBehaviour:
@@ -676,6 +676,7 @@ MonoBehaviour:
   _resultScoreText: {fileID: 917996003}
   _scoreCounter: {fileID: 1592865123}
   _gameInitializer: {fileID: 281180758}
+  _pressAnyKeyText: {fileID: 355696820}
 --- !u!1 &888804432
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,6 +1025,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _foodPrefab: {fileID: 1181283304220579239, guid: 0675dec2ee9844544bc1af4661207af4, type: 3}
+  _borderOffset: 1
+  _snakeController: {fileID: 1569239887}
 --- !u!1 &1569239884
 GameObject:
   m_ObjectHideFlags: 0

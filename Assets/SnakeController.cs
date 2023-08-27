@@ -19,6 +19,7 @@ public class SnakeController : MonoBehaviour
     private float _tickCounter; // Счетчик времени для нашего "тика"
     private bool _shouldGrow = false;
     private bool _collisionsEnabled = false;
+    private Vector2 screenBounds;
 
     private void Start()
     {
@@ -41,6 +42,10 @@ public class SnakeController : MonoBehaviour
 
         // Включим коллайдеры через 2 секунды
         Invoke("EnableColliders", _delayTailColliderDisable);
+
+        // Вычисляем границы экрана один раз на старте
+        Vector3 tempBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        screenBounds = new Vector2(tempBounds.x, tempBounds.y);
     }
 
     private void Update()
@@ -53,7 +58,19 @@ public class SnakeController : MonoBehaviour
             _tickCounter = 0f;
             Move();
             UpdateTail();
+
+            // Проверяем границы экрана после движения
+            if (IsOutOfScreenBounds())
+            {
+                _gameOverHandler.OnGameOver();
+                Debug.Log("OutOfScreenBounds: Game Over");
+            }
         }
+    }
+
+    private bool IsOutOfScreenBounds()
+    {
+        return Mathf.Abs(transform.position.x) > screenBounds.x || Mathf.Abs(transform.position.y) > screenBounds.y;
     }
 
     private void HandleInput()
@@ -163,5 +180,10 @@ public class SnakeController : MonoBehaviour
         }
 
         _collisionsEnabled = true;
+    }
+
+    public float GetMoveSpeed()
+    {
+        return _moveSpeed;
     }
 }
