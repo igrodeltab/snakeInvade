@@ -6,7 +6,7 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private GameObject[] _objectsToActivate;
 
     // Переменная, которая показывает, инициализировалась ли игра или нет
-    private bool _gameInitialized = false;
+    public bool _gameInitialized = false;
 
     private void Awake()
     {

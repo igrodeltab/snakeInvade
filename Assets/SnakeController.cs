@@ -8,6 +8,8 @@ public class SnakeController : MonoBehaviour
     [SerializeField] private int _initialTailSize;
     [SerializeField] private float _tickDuration; // Интервал времени между каждым шагом
     [SerializeField] private FoodSpawner _foodSpawner;
+    [SerializeField] private ScoreCounter _scoreCounter;
+    [SerializeField] private int _addPointsPerFood;
 
     private List<Transform> _tail = new List<Transform>();
     private Vector2 _currentDirection = Vector2.up;
@@ -120,12 +122,13 @@ public class SnakeController : MonoBehaviour
             _shouldGrow = true;
             Destroy(collision.gameObject); // Удаляем еду после "поедания".
             _foodSpawner.SpawnFood();
+            _scoreCounter.AddPoints(_addPointsPerFood);
         }
 
         Tail tail = collision.GetComponent<Tail>();
         if (tail != null)
         {
-            Debug.Log("OnTriggerEnter2D: tail");
+            //Debug.Log("OnTriggerEnter2D: tail");
         }
     }
 }
