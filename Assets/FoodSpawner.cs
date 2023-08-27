@@ -4,7 +4,6 @@ public class FoodSpawner : MonoBehaviour
 {
     // Префаб еды, который будет спавниться на сцене
     [SerializeField] private GameObject _foodPrefab;
-    private Transform _transform;
 
     // Координаты минимальной и максимальной границ экрана
     private Vector2 _minBounds;
@@ -12,9 +11,6 @@ public class FoodSpawner : MonoBehaviour
 
     private void Start()
     {
-        // Получение трансформа объекта
-        _transform = transform;
-
         // Преобразование координат экрана в координаты мирового пространства
         // для определения границ спавна еды
         _minBounds = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0));
@@ -34,6 +30,6 @@ public class FoodSpawner : MonoBehaviour
         Vector2 spawnPosition = new Vector2(randomX, randomY);
 
         // Инстанцирование префаба еды на сгенерированных координатах
-        Instantiate(_foodPrefab, spawnPosition, Quaternion.identity, _transform);
+        Instantiate(_foodPrefab, spawnPosition, Quaternion.identity);
     }
 }
